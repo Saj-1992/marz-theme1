@@ -425,6 +425,8 @@
         </div>
         <div class="text-content">
             <p style="font-size:14px">نام : {{ user.username }}</p>
+			<p>وضعیت اشتراک : <span class="font-bold" x-data="{status: '{{ user.status.value }}'}" x-text="[status == 'active' ? 'فعال' : status == 'limited' ? 'اتمام حجم' : status == 'expired' ? 'اتمام تاریخ' : status == 'on_hold' ? 'در انتظار' : 'غیر فعال']" :class="[status == 'active' ? 'text-yellow-600' : status == 'limited' ? 'text-yellow-600' : status == 'expired' ? 'text-yellow-600' : 'text-yellow-400']"></span><p>
+
             <p style="font-size:14px">حجم اشتراک : {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{% endif %}</p>
         </div>
        
@@ -458,8 +460,8 @@
 	 
     <div class="text-content">
             <p style="font-size:14px">حجم مصرف شده : {{ user.used_traffic | bytesformat }}</p>
-            <p style="font-size:14px">اشتراک تا   {% if not user.expire %} ∞ {% else %} {% set current_timestamp = now().timestamp() %} {% set remaining_days = ((user.expire - current_timestamp) // (24 * 3600)) %} {{ remaining_days | int }} روز {% endif %} فعال است</p>
-    </div>
+			
+            <p style="font-size:14px">اشتراک تا   {% if not user.expire %} ∞ {% else %} {% set current_timestamp = now().timestamp() %} {% set remaining_days = ((user.expire - current_timestamp) // (24 * 3600)) %} {{ remaining_days | int }} روز {% endif %} زمان دارد </p>     </div>
        
     </div>
 	</div>
