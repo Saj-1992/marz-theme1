@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <link href="https://fonts.googleapis.com/css?family=Vazirmatn" rel="stylesheet">
+    <title>subscription Page</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.js" defer></script>
+	<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js" defer=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.2.0/dist/alpine-clipboard.js"></script>
+
+
+    <style>
+        body {
+            font-family: "Vazirmatn", "Inter var", sans-serif;
+            margin: 20px auto;
+            padding: 20px;
+            direction: rtl;
+            background-color: #121212; 
+            color: #f1f1f1; 
+            line-height: 1.6;
+			   width: 90%;
+        }
+
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1f1f1f;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+            border-radius: 10px; 
+        }
+
+       
+        .section {
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #2a2a2a; 
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+        }
+
+      
+        .section-1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: nowrap;
+        }
+
+        .box {
+            background-color: #333333; 
+            padding: 20px;
+            margin: 0 10px;
+            width: calc(33.333% - 20px); 
+            display: flex;
+  
+            border-radius: 10px;
+			
+        }
+
+        .box-content {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+			justify-content: center;
+			align-items: center;
+		}
+		.text-content {
+            flex: 1;
+            padding-right: 20px;
+		}
+		
+		.item2 {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-right: 20px;
+			margin-left:20px;
+		}
+
+		.item2 svg {
+			margin-top: 10px; /* فاصله بین SVG و متن */
+			
+		}
+
+		.item2 p {
+			margin: 0px;
+			text-align: center;
+		}
+
+		.svg-container {
+			width: 80px;
+			height: 100%;
+			border-left: 2px solid #ffffff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.svg-container svg {
+			width: 60px;
+			height: 60px;
+			fill: #ffffff;
+		}
+
+       
+        @media (max-width: 768px) {
+		
+		.container {
+		    width: 85%;
+			}
+		
+            .box {
+                  width: 80%;
+        margin: 0;
+	
+        padding: 10px 3px 10px;
+            }
+			
+			 .box h3 {
+        font-size: 17px;
+		margin-right:5px;
+			}
+	
+        }
+
+        @media (max-width: 600px) {
+            .section-1 {
+                flex-direction: column;
+            }
+
+            .box {
+                width: 100%; 
+                margin: 10px 0;
+            }
+			
+        }
+		
+		 .section {
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .step-number {
+            width: 25px;
+            height: 25px;
+            background-color: #cb4335;
+            color: #121212;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+    
+   
+   
+		.icon-container {
+			display: flex;
+			justify-content: space-between;
+			width: 180px;
+			margin: 10px 0;
+		}
+
+		.icon-item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.icon {
+			width: 50px;
+			height: 50px;
+			background-color: #333333;
+			border-radius: 30%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+		}
+
+		.icon-label {
+			color: #ffffff;
+			margin-top: 5px;
+			font-size: 14px;
+		}
+
+   
+   
+
+        .line {
+            width: 50%;
+            height: 2px;
+            background-color: #cb4335;
+            margin: 20px 0;
+        }
+		
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #17202a;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            color: #ffffff;
+        }
+
+        .modal-content p {
+            margin: 10px 0;
+        }
+
+        .close {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ffffff;
+        }
+		
+		.motakhab {
+			border-radius:4px;
+			background-color:#117a65;
+			padding:3px;
+			position: relative;  
+		}
+		
+		a {text-decoration: none;color:#ffffff; }
+		
+		ul {
+            list-style-type: none; 
+            padding: 0; 
+			
+        }
+
+        li::before {
+            content: ' - '; 
+            color: #ffffff; 
+
+  
+        }
+		
+		.popup {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            padding-top: 100px; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+   
+
+        #qrcode {
+            margin-top: 20px;
+        }
+
+        .save-btn {
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background-color: #45a049;
+        }
+		
+	    .profile-card__links {
+			padding: 1rem;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.profile-card__links-button {
+			padding: 1rem;
+			display: inline-block;
+			width: 100%;
+			text-align: center;      
+			border-radius: 0.5rem;
+			color: #000;
+			transition: box-shadow 200ms ease;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		.profile-card__links-button:hover {
+			box-shadow: -3px 3px 0 #000;
+		}
+		
+		.link-name {
+			font-family: courier;
+		}
+
+		.link-box {
+			padding: 0.2rem;
+			display: inline-block;
+			width: 100%;
+			text-align: center;
+			border: 2px solid #fff;
+			margin-top: 2px;
+			border-radius: 0.5rem;
+			color: #fff;
+			transition: box-shadow 200ms ease;
+			text-decoration: none;
+			cursor: pointer;
+		}
+	
+		.gradient-button {
+            display: flex;
+            align-items: center;
+			background: rgb(31,31,31);
+			background: linear-gradient(90deg, rgba(31,31,31,1) 0%, rgba(51,51,51,1) 50%, rgba(31,31,31,1) 100%); 
+			border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+            transition: background 0.3s ease;
+			width:310px;
+			max-width:310px;
+        }
+
+        .gradient-button:hover {
+			background: linear-gradient(45deg, #444, #666); 
+        }
+
+        .button-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .button-text {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .separator {
+            height: 20px;
+            width: 1px;
+            background-color: white;
+            margin: 0 10px;
+        }
+
+        .button-icon {
+            display: flex;
+            align-items: center;
+        }
+
+        .button-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+ 
+    <div class="section section-1">
+	
+<div class="box">
+    <div class="box-content">
+	 <div class="svg-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="#fff">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+        </div>
+        <div class="text-content">
+            <p style="font-size:14px">نام : {{ user.username }}</p>
+            <p style="font-size:14px">حجم اشتراک : {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{% endif %}</p>
+        </div>
+       
+    </div>
+</div>
+
+
+
+    <div class="box">
+    <div class="box-content">
+	<div class="svg-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
+              
+            <rect x="2" y="4" width="20" height="18" rx="2" ry="2" fill="none" stroke="#fff" stroke-width="2"/>
+           
+            <rect x="2" y="6" width="20" height="4" fill="#fff"/>
+              
+            <circle cx="7" cy="4" r="1.5" fill="#fff"/>
+            <circle cx="17" cy="4" r="1.5" fill="#fff"/>
+             
+            <rect x="4" y="12" width="2" height="2" fill="#fff"/>
+            <rect x="8" y="12" width="2" height="2" fill="#fff"/>
+            <rect x="12" y="12" width="2" height="2" fill="#fff"/>
+            <rect x="16" y="12" width="2" height="2" fill="#fff"/>
+            <rect x="4" y="16" width="2" height="2" fill="#fff"/>
+            <rect x="8" y="16" width="2" height="2" fill="#fff"/>
+            <rect x="12" y="16" width="2" height="2" fill="#fff"/>
+            <rect x="16" y="16" width="2" height="2" fill="#fff"/>
+            </svg>
+    </div>
+	 
+    <div class="text-content">
+            <p style="font-size:14px">حجم مصرف شده : {{ user.used_traffic | bytesformat }}</p>
+            <p style="font-size:14px">اشتراک تا   {% if not user.expire %} ∞ {% else %} {% set current_timestamp = now().timestamp() %} {% set remaining_days = ((user.expire - current_timestamp) // (24 * 3600)) %} {{ remaining_days | int }} روز {% endif %} فعال است</p>
+    </div>
+       
+    </div>
+	</div>
+
+	<div class="box">
+    <div class="box-content">
+
+
+	
+	<div class="item2" style="text-align: center;">
+			<a style="font-size:14px;cursor: pointer;" href="#" x-data-link="{{ user.subscription_url }}" onclick="openPopup(this); event.preventDefault();">
+
+			<svg width="40px" height="40px" viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" ><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#cb4335" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 18.25C14.5858 18.25 14.25 18.5858 14.25 19C14.25 19.4142 14.5858 19.75 15 19.75V18.25ZM19.75 14C19.75 13.5858 19.4142 13.25 19 13.25C18.5858 13.25 18.25 13.5858 18.25 14H19.75ZM9 19.75C9.41421 19.75 9.75 19.4142 9.75 19C9.75 18.5858 9.41421 18.25 9 18.25V19.75ZM5.75 14C5.75 13.5858 5.41421 13.25 5 13.25C4.58579 13.25 4.25 13.5858 4.25 14H5.75ZM9 5.75C9.41421 5.75 9.75 5.41421 9.75 5C9.75 4.58579 9.41421 4.25 9 4.25V5.75ZM4.25 10C4.25 10.4142 4.58579 10.75 5 10.75C5.41421 10.75 5.75 10.4142 5.75 10H4.25ZM15 4.25C14.5858 4.25 14.25 4.58579 14.25 5C14.25 5.41421 14.5858 5.75 15 5.75L15 4.25ZM18.25 10C18.25 10.4142 18.5858 10.75 19 10.75C19.4142 10.75 19.75 10.4142 19.75 10L18.25 10ZM15 19.75C17.6234 19.75 19.75 17.6234 19.75 15H18.25C18.25 16.7949 16.7949 18.25 15 18.25V19.75ZM19.75 15V14H18.25V15H19.75ZM9 18.25C7.20507 18.25 5.75 16.7949 5.75 15H4.25C4.25 17.6234 6.37665 19.75 9 19.75V18.25ZM5.75 15V14H4.25V15H5.75ZM9 4.25C6.37665 4.25 4.25 6.37665 4.25 9H5.75C5.75 7.20507 7.20507 5.75 9 5.75V4.25ZM4.25 9V10H5.75V9H4.25ZM15 5.75C16.7949 5.75 18.25 7.20507 18.25 9L19.75 9C19.75 6.37665 17.6234 4.25 15 4.25L15 5.75ZM18.25 9V10L19.75 10V9L18.25 9Z" fill="#ffffff"></path> <path d="M17 12H7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+
+			<p>QR Code</p>
+		
+			</a>	
+	<div id="myPopup" class="popup">
+    <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+    <div id="qrcode"></div>
+            <button class="save-btn" onclick="saveQRCode()">ذخیره QR Code</button>
+    </div>
+    </div>
+	
+	</div>
+  
+	<div class="item2" style="text-align: center;">
+            <a x-data="{ link: '{{ user.subscription_url }}' }" @click="copyToClipboard(link)" style="font-size:14px;cursor: pointer;">
+  			<svg width="40px" height="40px" viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#cb4335" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.24 2H11.3458C9.58159 1.99999 8.18418 1.99997 7.09054 2.1476C5.96501 2.29953 5.05402 2.61964 4.33559 3.34096C3.61717 4.06227 3.29833 4.97692 3.14701 6.10697C2.99997 7.205 2.99999 8.60802 3 10.3793V16.2169C3 17.725 3.91995 19.0174 5.22717 19.5592C5.15989 18.6498 5.15994 17.3737 5.16 16.312L5.16 11.3976L5.16 11.3024C5.15993 10.0207 5.15986 8.91644 5.27828 8.03211C5.40519 7.08438 5.69139 6.17592 6.4253 5.43906C7.15921 4.70219 8.06404 4.41485 9.00798 4.28743C9.88877 4.16854 10.9887 4.1686 12.2652 4.16867L12.36 4.16868H15.24L15.3348 4.16867C16.6113 4.1686 17.7088 4.16854 18.5896 4.28743C18.0627 2.94779 16.7616 2 15.24 2Z" fill="#ffffff"></path> <path d="M6.6001 11.3974C6.6001 8.67119 6.6001 7.3081 7.44363 6.46118C8.28716 5.61426 9.64481 5.61426 12.3601 5.61426H15.2401C17.9554 5.61426 19.313 5.61426 20.1566 6.46118C21.0001 7.3081 21.0001 8.6712 21.0001 11.3974V16.2167C21.0001 18.9429 21.0001 20.306 20.1566 21.1529C19.313 21.9998 17.9554 21.9998 15.2401 21.9998H12.3601C9.64481 21.9998 8.28716 21.9998 7.44363 21.1529C6.6001 20.306 6.6001 18.9429 6.6001 16.2167V11.3974Z" fill="#ffffff"></path> </g></svg>
+ 
+   
+			<p>لینک اشتراک</p>
+			</a>
+	</div>
+  
+	<div class="item2" style="text-align: center;">
+    <div style="   cursor: pointer;" onclick="openModal('confModal')">
+	<svg width="40px" height="40px" viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#cb4335" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 6.00067L21 6.00139M8 12.0007L21 12.0015M8 18.0007L21 18.0015M3.5 6H3.51M3.5 12H3.51M3.5 18H3.51M4 6C4 6.27614 3.77614 6.5 3.5 6.5C3.22386 6.5 3 6.27614 3 6C3 5.72386 3.22386 5.5 3.5 5.5C3.77614 5.5 4 5.72386 4 6ZM4 12C4 12.2761 3.77614 12.5 3.5 12.5C3.22386 12.5 3 12.2761 3 12C3 11.7239 3.22386 11.5 3.5 11.5C3.77614 11.5 4 11.7239 4 12ZM4 18C4 18.2761 3.77614 18.5 3.5 18.5C3.22386 18.5 3 18.2761 3 18C3 17.7239 3.22386 17.5 3.5 17.5C3.77614 17.5 4 17.7239 4 18Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>			
+	</div>
+			<p>کانفیگ ها</p>
+	</div>
+	
+	</div>
+	</div>
+    </div>
+
+
+    <div class="section section-2">
+      
+    <div class="step">
+    <div class="step-number">1</div>
+            <p style="margin-right:10px;  background: rgb(42,42,42);background: linear-gradient(90deg, rgba(42,42,42,1) 0%, rgba(203,67,53,0.6390756131554185) 50%, rgba(42,42,42,1) 100%);  ">مرحله اول: دانلود برنامه دلخواه</p>
+    </div>
+
+    <div class="icon-container">
+    <div class="icon-item">
+    <div class="icon" onclick="openModal('androidModal')">
+			<svg width="26" height="26" viewBox="0 0 512 512" fill="#ffffff">
+            <path d="M120.606,169h270.788v220.663c0,13.109-10.628,23.737-23.721,23.737h-27.123v67.203c0,17.066-13.612,30.897-30.415,30.897c-16.846,0-30.438-13.831-30.438-30.897v-67.203h-47.371v67.203c0,17.066-13.639,30.897-30.441,30.897c-16.799,0-30.437-13.831-30.437-30.897v-67.203h-27.099c-13.096,0-23.744-10.628-23.744-23.737V169z M67.541,167.199c-16.974,0-30.723,13.963-30.723,31.2v121.937c0,17.217,13.749,31.204,30.723,31.204c16.977,0,30.723-13.987,30.723-31.204V198.399C98.264,181.162,84.518,167.199,67.541,167.199z M391.395,146.764H120.606c3.342-38.578,28.367-71.776,64.392-90.998l-25.746-37.804c-3.472-5.098-2.162-12.054,2.946-15.525c5.102-3.471,12.044-2.151,15.533,2.943l28.061,41.232c15.558-5.38,32.446-8.469,50.208-8.469c17.783,0,34.672,3.089,50.229,8.476L334.29,5.395c3.446-5.108,10.41-6.428,15.512-2.957c5.108,3.471,6.418,10.427,2.946,15.525l-25.725,37.804C363.047,74.977,388.055,108.175,391.395,146.764z M213.865,94.345c0-8.273-6.699-14.983-14.969-14.983c-8.291,0-14.99,6.71-14.99,14.983c0,8.269,6.721,14.976,14.99,14.976S213.865,102.614,213.865,94.345z M329.992,94.345c0-8.273-6.722-14.983-14.99-14.983c-8.291,0-14.97,6.71-14.97,14.983c0,8.269,6.679,14.976,14.97,14.976C323.271,109.321,329.992,102.614,329.992,94.345z M444.48,167.156c-16.956,0-30.744,13.984-30.744,31.222v121.98c0,17.238,13.788,31.226,30.744,31.226c16.978,0,30.701-13.987,30.701-31.226v-121.98C475.182,181.14,461.458,167.156,444.48,167.156z"> </path>
+            </svg>
+    </div>
+    <div class="icon-label">اندروید</div>
+    </div>
+	
+    <div class="icon-item">
+    <div class="icon" onclick="openModal('iphoneModal')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#fff" viewBox="0 0 25 25">
+            <path d="M14.731 4.847c.671-.867 1.143-2.073.988-3.264-1.065.034-2.33.712-3.091 1.602-.671.775-1.26 1.989-1.037 3.14 1.215.044 2.441-.616 3.14-1.478zm-1.224 2.608c-1.73 0-3.078 1.008-3.882 1.008-.86 0-2.167-.953-3.573-.926-1.837.03-3.548 1.069-4.485 2.719-1.924 3.342-.496 8.287 1.367 11.005.906 1.302 1.988 2.754 3.408 2.705 1.358-.055 1.869-.878 3.951-.878 2.082 0 2.543.878 3.567.852 1.494-.027 2.429-1.319 3.338-2.625.589-.878.808-1.317 1.265-2.302-3.319-1.265-3.849-7.484-.573-8.751-.961-1.294-2.433-2.039-3.867-2.039-1.812 0-2.584.926-3.855.926-1.298 0-2.136-.926-3.882-.926z"/>
+            </svg>
+        </div>
+        <div class="icon-label">آیفون</div>
+    </div>
+	
+	<div class="icon-item">
+    <div class="icon" onclick="openModal('windowsModal')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="26" height="26">
+			<path fill="#ffffff" d="M22 23H3V5l19-2z"/>
+			<path fill="#ffffff" d="M25 23v-20l20-2v22z"/>
+			<path fill="#ffffff" d="M22 26v17l-19-2V25z"/>
+			<path fill="#ffffff" d="M25 26h20v19l-20-2z"/>
+			</svg>
+    </div>
+    <div class="icon-label">ویندوز</div>
+    </div>
+	
+	
+	</div>
+
+			<p>با کلیک روی آیکون سیستم عامل خود ، برنامه مورد نظر خود را دانلود کنید .</p>
+
+    <div class="line"></div>
+
+ 
+    <div class="step">
+    <div class="step-number">2</div>
+            <p style="margin-right:10px; background: rgb(42,42,42);background: linear-gradient(90deg, rgba(42,42,42,1) 0%, rgba(203,67,53,0.6390756131554185) 50%, rgba(42,42,42,1) 100%);  ">مرحله دوم: افزودن اشتراک به برنامه</p>
+    </div>
+
+    <div class="icon-container">
+    <div class="icon-item">
+    <div class="icon" onclick="openModal('androidModal2')">
+			<svg width="26" height="26" viewBox="0 0 512 512" fill="#ffffff">
+            <path d="M120.606,169h270.788v220.663c0,13.109-10.628,23.737-23.721,23.737h-27.123v67.203c0,17.066-13.612,30.897-30.415,30.897c-16.846,0-30.438-13.831-30.438-30.897v-67.203h-47.371v67.203c0,17.066-13.639,30.897-30.441,30.897c-16.799,0-30.437-13.831-30.437-30.897v-67.203h-27.099c-13.096,0-23.744-10.628-23.744-23.737V169z M67.541,167.199c-16.974,0-30.723,13.963-30.723,31.2v121.937c0,17.217,13.749,31.204,30.723,31.204c16.977,0,30.723-13.987,30.723-31.204V198.399C98.264,181.162,84.518,167.199,67.541,167.199z M391.395,146.764H120.606c3.342-38.578,28.367-71.776,64.392-90.998l-25.746-37.804c-3.472-5.098-2.162-12.054,2.946-15.525c5.102-3.471,12.044-2.151,15.533,2.943l28.061,41.232c15.558-5.38,32.446-8.469,50.208-8.469c17.783,0,34.672,3.089,50.229,8.476L334.29,5.395c3.446-5.108,10.41-6.428,15.512-2.957c5.108,3.471,6.418,10.427,2.946,15.525l-25.725,37.804C363.047,74.977,388.055,108.175,391.395,146.764z M213.865,94.345c0-8.273-6.699-14.983-14.969-14.983c-8.291,0-14.99,6.71-14.99,14.983c0,8.269,6.721,14.976,14.99,14.976S213.865,102.614,213.865,94.345z M329.992,94.345c0-8.273-6.722-14.983-14.99-14.983c-8.291,0-14.97,6.71-14.97,14.983c0,8.269,6.679,14.976,14.97,14.976C323.271,109.321,329.992,102.614,329.992,94.345z M444.48,167.156c-16.956,0-30.744,13.984-30.744,31.222v121.98c0,17.238,13.788,31.226,30.744,31.226c16.978,0,30.701-13.987,30.701-31.226v-121.98C475.182,181.14,461.458,167.156,444.48,167.156z"></path>
+            </svg>
+			
+    </div>
+	
+    <div class="icon-label">اندروید</div>
+    </div>
+    <div class="icon-item">
+    <div class="icon" onclick="openModal('iphoneModal2')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#fff" viewBox="0 0 25 25">
+            <path d="M14.731 4.847c.671-.867 1.143-2.073.988-3.264-1.065.034-2.33.712-3.091 1.602-.671.775-1.26 1.989-1.037 3.14 1.215.044 2.441-.616 3.14-1.478zm-1.224 2.608c-1.73 0-3.078 1.008-3.882 1.008-.86 0-2.167-.953-3.573-.926-1.837.03-3.548 1.069-4.485 2.719-1.924 3.342-.496 8.287 1.367 11.005.906 1.302 1.988 2.754 3.408 2.705 1.358-.055 1.869-.878 3.951-.878 2.082 0 2.543.878 3.567.852 1.494-.027 2.429-1.319 3.338-2.625.589-.878.808-1.317 1.265-2.302-3.319-1.265-3.849-7.484-.573-8.751-.961-1.294-2.433-2.039-3.867-2.039-1.812 0-2.584.926-3.855.926-1.298 0-2.136-.926-3.882-.926z"/>
+            </svg>
+    </div>
+    <div class="icon-label">آیفون</div>
+    </div>
+	
+    <div class="icon-item">
+    <div class="icon" onclick="openModal('windowsModal2')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="26" height="26">
+			<path fill="#ffffff" d="M22 23H3V5l19-2z"/>
+			<path fill="#ffffff" d="M25 23v-20l20-2v22z"/>
+			<path fill="#ffffff" d="M22 26v17l-19-2V25z"/>
+			<path fill="#ffffff" d="M25 26h20v19l-20-2z"/>
+			</svg>
+    </div>
+    <div class="icon-label">ویندوز</div>
+    </div>
+	
+	</div>
+
+			<p>بر روی سیستم عامل ، و سپس برنامه ای که در مرحله اول نصب کردید کلیک کنید .</p>
+    </div>
+
+
+
+	<div id="androidModal" class="modal">
+    <div class="modal-content">
+			<span class="close" onclick="closeModal('androidModal')">&times;</span>
+			<br><br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a href="https://github.com/2dust/v2rayNG/releases/download/1.8.37/v2rayNG_1.8.37_universal.apk">دانلود برنامه v2rayng</a></div>
+    <div class="separator"></div>
+    <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+	
+			<br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+            <div class="button-text"><a href="https://github.com/SagerNet/sing-box/releases/download/v1.10.0-alpha.29/SFA-1.10.0-alpha.29-universal.apk">دانلود برنامه sing-box</a></div>
+            <div class="separator"></div>
+            <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+			<br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a href="https://github.com/chen08209/FlClash/releases/download/v0.8.53/FlClash-0.8.53-android-arm64-v8a.apk">دانلود برنامه flclash</a></div>
+    <div class="separator"></div>
+    <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+    
+			<br><br>
+			<p>از لیست بالا برنامه ی مورد نظر خود را با کلیک دانلود کنید.</p>
+	
+    </div>
+	</div>
+
+	<div id="iphoneModal" class="modal">
+    <div class="modal-content">
+			<span class="close" onclick="closeModal('iphoneModal')">&times;</span>
+			<br>
+			<br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a target="_blank" href="https://apps.apple.com/us/app/sing-box/id6451272673">دانلود برنامه sing-box</a></div>
+    <div class="separator"></div>
+    <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+	
+			<br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a target="_blank" href="https://apps.apple.com/us/app/streisand/id6450534064">دانلود برنامه streisand    </a></div>
+    <div class="separator"></div>
+    <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+	
+			<br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a target="_blank" href="https://apps.apple.com/us/app/foxray/id6448898396">دانلود برنامه foxray</a></div>
+    <div class="separator"></div>
+    <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+	
+			<br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a target="_blank" href="https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690">دانلود برنامه v2box</a></div>
+    <div class="separator"></div>
+    <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+	
+	
+			<br><br>
+			<p>از لیست بالا برنامه ی مورد نظر خود را با کلیک دانلود کنید.</p>
+	
+    </div>
+	</div>
+
+	<div id="windowsModal" class="modal">
+    <div class="modal-content">
+			<span class="close" onclick="closeModal('windowsModal')">&times;</span>
+	
+	
+			<br>
+			<br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a target="_blank" href="https://github.com/hiddify/hiddify-next/releases/download/v2.1.5/Hiddify-Windows-Portable-x64.zip">دانلود برنامه hiddify</a></div>
+    <div class="separator"></div>
+    <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+    </button>
+	
+			<br>
+			<button id="button1" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a target="_blank" href="https://github.com/chen08209/FlClash/releases/download/v0.8.53/FlClash-0.8.53-windows-amd64-setup.exe">دانلود برنامه flclash    </a></div>
+    <div class="separator"></div>
+    <div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+			<br>
+			
+			<button id="button1" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a target="_blank" href="https://github.com/2dust/v2rayN/releases/download/6.55/v2rayN-With-Core.zip">دانلود برنامه v2rayn</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+			<path d="M8 12.5a.5.5 0 0 1-.354-.146l-5-5a.5.5 0 0 1 .708-.708L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.354.146z"/>
+            <path d="M8 0v12.5h1V0H8z"/>
+            </svg>
+    </div>
+    </div>
+			</button>
+	
+			<br><br>
+			<p>از لیست بالا برنامه ی مورد نظر خود را با کلیک دانلود کنید.</p>
+	
+
+    </div>
+	</div>
+
+
+
+
+	<div id="androidModal2" class="modal">
+    <div class="modal-content">
+			<span class="close" onclick="closeModal('androidModal2')">&times;</span>
+	
+			<br><br>
+			<button id="button11" class="gradient-button">
+    <div class="button-content">
+    <div class="button-text"><a href="v2rayng://install-sub?url={{ user.subscription_url }}&name=Marz">افزودن اشتراک به برنامه v2rayng</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+			<br>
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="sing-box://import-remote-profile?url={{ user.subscription_url }}#Marz">افزودن اشتراک به برنامه sing-box</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+			<br>
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="clash://install-config?url={{ user.subscription_url }}">افزودن اشتراک به برنامه flclash</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+			<br><br>
+			<p>از لیست بالا روی برنامه ای که در مرحله قبل نصب کردید کلیک کنید.</p>
+	
+	
+	</div>
+	</div>
+
+	<div id="iphoneModal2" class="modal">
+    <div class="modal-content">
+			<span class="close" onclick="closeModal('iphoneModal2')">&times;</span>
+	
+	
+			<br><br>
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="sing-box://import-remote-profile?url={{ user.subscription_url }}#Marz">افزودن اشتراک به برنامه sing-box</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+	
+			<br>
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="streisand://import/{{ user.subscription_url }}#Marz">افزودن اشتراک به برنامه streisand</a></div>
+	<div class="separator"></div>
+		<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+			<br>
+			
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="foxray://yiguo.dev/sub/add/?url={{ user.subscription_url }}#Marz">افزودن اشتراک به برنامه foxray</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+	
+			<br>
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="v2box://install-sub?url={{ user.subscription_url }}&name=Marz">افزودن اشتراک به برنامه v2box</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+			<br><br>
+			<p>از لیست بالا روی برنامه ای که در مرحله قبل نصب کردید کلیک کنید.</p>
+	
+	
+    </div>
+	</div>
+
+	<div id="windowsModal2" class="modal">
+    <div class="modal-content">
+			<span class="close" onclick="closeModal('windowsModal2')">&times;</span>
+	
+			<br>
+			<br>
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="clash://install-config?url={{ user.subscription_url }}">افزودن اشتراک به برنامه flclash</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+			<br>
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="hiddify://install-config/?url={{ user.subscription_url }}">افزودن اشتراک به برنامه hiddify</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+			<br>
+			<button id="button11" class="gradient-button">
+	<div class="button-content">
+	<div class="button-text"><a href="v2rayn://install-sub?url={{ user.subscription_url }}&name=Marz">افزودن اشتراک به برنامه v2rayn</a></div>
+	<div class="separator"></div>
+	<div class="button-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M12 5v14m-7-7h14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+	</div>
+	</div>
+			</button>
+	
+
+	
+			<br><br>
+		<p>از لیست بالا روی برنامه ای که در مرحله قبل نصب کردید کلیک کنید.</p>
+	
+	
+    </div>
+	</div>
+
+	<div id="confModal" class="modal">
+    <div class="modal-content">
+			<span class="close" onclick="closeModal('confModal')">&times;</span>
+			<br>
+			
+			<p class="description" id="desc-6" style=" color:#000;;font-size: 18px;margin-bottom: 25px;">
+                         
+			<a dir="rtl" style="padding: 1rem;display: flex;flex-direction: column;gap: 1rem;" class="profile-card__links" x-data>
+
+
+
+                    {% for link in user.links %}
+
+                        <a  x-data="{ link: '{{ link }}' }" class="link-box"  dir="rtl" @click="() => { navigator.clipboard.writeText( link ); copyColor = 'stroke-green-600'; setTimeout(() => copyColor = 'stroke-blue-600', 2000); }">
+                        <span dir="ltr" x-text="getRemark(link)" class="link-name"></span>
+                        </a>
+                    {% endfor %}
+         
+					</a></p>
+					<p>برای کپی ، یکبار روی کانفیگ مورد نظر کلیک کنید .</p>
+    </div>
+	</div>
+
+
+
+	</div>
+
+
+    <script>
+	
+        function copyToClipboard(text) {
+       
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+
+        
+            tempInput.select();
+            document.execCommand('copy');
+
+      
+            document.body.removeChild(tempInput);
+
+          
+            alert('لینک اشتراک به کلیپ بورد اضافه شد');
+            navigator.clipboard.writeText(text);
+        }
+    </script>
+	
+	<script>
+	
+        function openPopup(link) {
+ 
+            var popup = document.getElementById("myPopup");
+            popup.style.display = "block";
+
+       
+            document.getElementById("qrcode").innerHTML = "";
+
+      
+            var data = link.getAttribute('x-data-link');
+
+       
+            var qrCodeConfig = {
+                text: data,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H  
+            };
+
+     
+            new QRCode(document.getElementById("qrcode"), qrCodeConfig);
+        }
+
+        function closePopup() {
+            var popup = document.getElementById("myPopup");
+            popup.style.display = "none";
+        }
+
+    
+        window.onclick = function(event) {
+            var popup = document.getElementById("myPopup");
+            if (event.target == popup) {
+                popup.style.display = "none";
+            }
+        }
+
+        function saveQRCode() {
+            var qrCanvas = document.querySelector('#qrcode canvas');
+            var qrImage = qrCanvas.toDataURL("image/png");
+            var link = document.createElement('a');
+            link.href = qrImage;
+            link.download = 'qrcode.png';
+            link.click();
+        }
+    </script>
+	
+
+    <script>
+		
+		function toggleCard() {
+			var hiddenCard = document.querySelector('.hidden-card');
+			var arrowIcon = document.querySelector('.arrow-icon img');
+
+			if (hiddenCard.style.display === 'none' || hiddenCard.style.display === '') {
+			hiddenCard.style.display = 'block';
+			arrowIcon.classList.add('rotate');
+			} else {
+			hiddenCard.style.display = 'none';
+			arrowIcon.classList.remove('rotate');
+        }
+      }
+		
+
+		function getRemark ( link )
+        {
+            if ( link.startsWith( "http" ) ) return AlpineI18n.t( "subscription" );
+            if ( link.includes( "vmess://" ) )
+            {
+                const config = JSON.parse( atob( link.replace( "vmess://", "" ) ) );
+                return config.ps;
+            } else return decodeURIComponent( link.split( "#" )[ 1 ] );
+        }
+    </script>
+	
+	
+	
+	<script>
+   
+		function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+		}
+
+ 
+		function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+		}
+
+ 
+		window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+        }
+		}
+	</script>
+
+	
+	
+	<script>
+
+
+		document.querySelectorAll('button').forEach(button => {
+		button.addEventListener('click', function() {
+        const buttonText = this.querySelector('.button-text');
+        
+        if (this.id === 'button11') {
+            buttonText.textContent = 'خودکار به برنامه هدایت میشوید، آنجا ';
+        } else {
+            buttonText.textContent = 'برنامه را دانلود کنید و';
+        }
+
+   
+        setTimeout(() => {
+            if (this.id === 'button11') {
+                buttonText.textContent = 'روی import، submit یا add کلیک کنید';
+            } else {
+                buttonText.textContent = 'باکس را ببندید و به مرحله دوم بروید';
+            }
+        }, 2500); 
+		});
+		});
+
+
+
+    </script>
+</body>
+</html>
